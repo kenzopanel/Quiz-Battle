@@ -19,7 +19,7 @@ class BattleCleanupCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Remove expired and finished battles from Redis';
+    protected $description = 'Remove expired and stale battles from Redis';
 
     /**
      * Execute the console command.
@@ -30,7 +30,7 @@ class BattleCleanupCommand extends Command
 
         $cleanedCount = $battleService->cleanupAllBattles();
 
-        $this->info("Cleanup completed. Removed {$cleanedCount} expired battles.");
+        $this->info("Cleanup completed. Removed {$cleanedCount} stale battles.");
 
         return Command::SUCCESS;
     }

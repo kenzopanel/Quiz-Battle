@@ -27,11 +27,10 @@ it('can cleanup expired battles', function () {
     $battleId1 = $battleService->createBattle($quiz, ['player1', 'player2']);
     $battleId2 = $battleService->createBattle($quiz, ['player3', 'player4']);
 
-    // Manually set one battle as finished and old
-    $battleData = $battleService->getBattleData($battleId1);
-    $battleData['status'] = 'finished';
-    $battleData['finished_at'] = now()->subHours(2)->timestamp; // 2 hours ago
-    $battleService->setBattleData($battleId1, $battleData);
+    // Manually set one battle as expired (created more than 5 minutes ago)
+    $battleData1 = $battleService->getBattleData($battleId1);
+    $battleData1['created_at'] = now()->subMinutes(10)->timestamp; // 10 minutes ago, older than 5 min expiry
+    $battleService->setBattleData($battleId1, $battleData1);
 
     // Manually set another battle as expired (created more than 5 minutes ago)
     $battleData2 = $battleService->getBattleData($battleId2);
@@ -111,6 +110,26 @@ it('can cleanup ongoing battles that exceeded end time with grace period', funct
 it('runs cleanup command successfully', function () {
     $this->artisan('battle:cleanup')
         ->expectsOutput('Starting battle cleanup...')
-        ->expectsOutputToContain('Cleanup completed. Removed')
+        ->expectsOutputToContain('Cleanup completed. Removed 0 stale battles.')
         ->assertSuccessful();
+});
+
+it('immediately removes battle data when battle ends', function () {
+    $battleService = app(BattleService::class);
+
+    // Create test data
+    $category = Category::factory()->create();
+    $quiz = Quiz::factory()->create(['category_id' => $category->id]);
+
+    // Create a battle
+    $battleId = $battleService->createBattle($quiz, ['player1', 'player2']);
+
+    // Verify battle exists
+    expect($battleService->getBattleData($battleId))->not->toBeNull();
+
+    // End the battle
+    $battleService->endBattle($battleId);
+
+    // Verify battle data is immediately removed
+    expect($battleService->getBattleData($battleId))->toBeNull();
 });

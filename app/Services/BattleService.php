@@ -43,15 +43,15 @@ class BattleService
     {
         $battleData = $this->getBattleData($battleId);
 
-        if (!$battleData || !in_array($sessionToken, $battleData['players'])) {
+        if (! $battleData || ! in_array($sessionToken, $battleData['players'])) {
             return false;
         }
 
-        if (!isset($battleData['joined_players'])) {
+        if (! isset($battleData['joined_players'])) {
             $battleData['joined_players'] = [];
         }
 
-        if (!in_array($sessionToken, $battleData['joined_players'])) {
+        if (! in_array($sessionToken, $battleData['joined_players'])) {
             $battleData['joined_players'][] = $sessionToken;
             $this->setBattleData($battleId, $battleData);
 
@@ -69,13 +69,13 @@ class BattleService
     {
         $battleData = $this->getBattleData($battleId);
 
-        if (!$battleData || $battleData['status'] !== 'waiting') {
+        if (! $battleData || $battleData['status'] !== 'waiting') {
             return false;
         }
 
         $quiz = Quiz::with(['questions.options'])->find($battleData['quiz_id']);
 
-        if (!$quiz) {
+        if (! $quiz) {
             return false;
         }
 
@@ -94,7 +94,7 @@ class BattleService
     {
         $battleData = $this->getBattleData($battleId);
 
-        if (!$battleData || !in_array($sessionToken, $battleData['players'])) {
+        if (! $battleData || ! in_array($sessionToken, $battleData['players'])) {
             return false;
         }
 
@@ -114,7 +114,7 @@ class BattleService
     {
         $battleData = $this->getBattleData($battleId);
 
-        if (!$battleData || !in_array($sessionToken, $battleData['players'])) {
+        if (! $battleData || ! in_array($sessionToken, $battleData['players'])) {
             return false;
         }
 
@@ -133,7 +133,7 @@ class BattleService
     {
         $battleData = $this->getBattleData($battleId);
 
-        if (!$battleData) {
+        if (! $battleData) {
             return false;
         }
 
@@ -143,9 +143,11 @@ class BattleService
         $winner = $this->determineWinner($battleData);
         $battleData['winner'] = $winner;
 
-        $this->setBattleData($battleId, $battleData);
-
+        // Broadcast the battle end event before removing the data
         broadcast(new BattleEnded($battleId, $winner, $battleData['player_scores']));
+
+        // Immediately remove the battle data to prevent ID reuse
+        $this->removeBattleData($battleId);
 
         return true;
     }
@@ -153,6 +155,7 @@ class BattleService
     public function getBattleData(string $battleId): ?array
     {
         $data = Redis::get($this->getBattleKey($battleId));
+
         return $data ? json_decode($data, true) : null;
     }
 
@@ -163,6 +166,11 @@ class BattleService
             $this->getBattleExpiry(),
             json_encode($data)
         );
+    }
+
+    public function removeBattleData(string $battleId): bool
+    {
+        return Redis::del($this->getBattleKey($battleId)) > 0;
     }
 
     private function determineWinner(array $battleData): ?string
@@ -202,7 +210,6 @@ class BattleService
         $cleanedCount = 0;
         $currentTime = now()->timestamp;
 
-        $finishedRetention = config('quiz.battle.finished_battle_retention', 3600);
         $gracePeriod = config('quiz.battle.ongoing_battle_grace_period', 300);
 
         foreach ($keys as $key) {
@@ -210,31 +217,25 @@ class BattleService
 
             $battleData = json_decode(Redis::get($actualKey), true);
 
-            if (!$battleData) {
+            if (! $battleData) {
                 Redis::del($actualKey);
                 $cleanedCount++;
+
                 continue;
             }
 
-            if (
-                $battleData['status'] === 'finished' &&
-                isset($battleData['finished_at']) &&
-                ($currentTime - $battleData['finished_at']) > $finishedRetention
-            ) {
-                Redis::del($actualKey);
-                $cleanedCount++;
-                continue;
-            }
-
+            // Clean up battles that have expired based on their creation time
             if (
                 isset($battleData['created_at']) &&
                 ($currentTime - $battleData['created_at']) > $this->getBattleExpiry()
             ) {
                 Redis::del($actualKey);
                 $cleanedCount++;
+
                 continue;
             }
 
+            // Clean up ongoing battles that have exceeded their end time + grace period
             if (
                 $battleData['status'] === 'ongoing' &&
                 isset($battleData['ends_at']) &&
@@ -243,6 +244,9 @@ class BattleService
                 Redis::del($actualKey);
                 $cleanedCount++;
             }
+
+            // Note: Finished battles are automatically removed in endBattle()
+            // so no cleanup needed for finished status here
         }
 
         return $cleanedCount;

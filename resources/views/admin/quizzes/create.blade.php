@@ -180,7 +180,7 @@
                             <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
                         <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                            Rentang waktu (30-3600 detik)
+                            Rentang waktu (30-300 detik)
                         </p>
                     </div>
 
@@ -204,7 +204,7 @@
                             <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
                         <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                            Rentang waktu (5-300 detik)
+                            Rentang waktu (5-60 detik)
                         </p>
                     </div>
                 </div>

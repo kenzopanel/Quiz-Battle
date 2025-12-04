@@ -22,7 +22,7 @@
             <!-- Progress Bar -->
             <div class="mt-4">
                 <div class="flex justify-between items-center mb-2">
-                    <span class="text-sm text-gray-600 dark:text-gray-400">Progress</span>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Terjawab</span>
                     <span id="question-counter" class="text-sm text-gray-600 dark:text-gray-400">0 /
                         {{ $quiz->questions->count() }}</span>
                 </div>
@@ -97,12 +97,8 @@
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-6">
                         <div class="text-center">
-                            <div class="text-sm text-gray-500 dark:text-gray-400">Skor Kamu</div>
-                            <div id="your-score" class="text-2xl font-bold text-green-600 dark:text-green-400">0</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-sm text-gray-500 dark:text-gray-400">Jawaban Benar</div>
-                            <div id="correct-count" class="text-lg font-semibold text-gray-900 dark:text-white">0</div>
+                            <div class="text-sm text-gray-500 dark:text-gray-400">Benar</div>
+                            <div id="your-score" class="text-lg font-bold text-green-600 dark:text-green-400">0</div>
                         </div>
                         <div class="text-center">
                             <div class="text-sm text-gray-500 dark:text-gray-400">Rata-rata Waktu</div>
@@ -111,8 +107,8 @@
                     </div>
 
                     <div class="text-center">
-                        <div class="text-sm text-gray-500 dark:text-gray-400">Status Pertarungan</div>
-                        <div id="battle-status" class="text-lg font-semibold text-blue-600 dark:text-blue-400">Dalam Proses
+                        <div class="text-sm text-gray-500 dark:text-gray-400">Status</div>
+                        <div id="battle-status" class="text-md font-semibold text-blue-600 dark:text-blue-400">Dalam Proses
                         </div>
                     </div>
                 </div>
@@ -169,7 +165,6 @@
                     timerCircle: document.getElementById('timer-circle'),
                     totalTime: document.getElementById('total-time'),
                     yourScore: document.getElementById('your-score'),
-                    correctCount: document.getElementById('correct-count'),
                     avgTime: document.getElementById('avg-time'),
                     battleStatus: document.getElementById('battle-status')
                 };
@@ -439,7 +434,6 @@
 
                 function updateStatsDisplay() {
                     elements.yourScore.textContent = totalCorrect;
-                    elements.correctCount.textContent = totalCorrect;
 
                     if (userAnswers.length > 0) {
                         const avgTime = totalTime / userAnswers.length / 1000;
@@ -467,7 +461,7 @@
                         }).then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                elements.battleStatus.textContent = 'Menunggu lawanmu...';
+                                elements.battleStatus.textContent = 'Menunggu lawan';
                             }
                         }).catch(error => {
                             console.error('Error submitting score:', error);
