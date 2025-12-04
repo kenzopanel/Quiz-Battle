@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Quiz;
+use App\Models\Setting;
 use App\Services\BattleService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -17,36 +18,45 @@ class BattleController extends Controller
     {
         $battleData = $this->battleService->getBattleData($battleId);
 
-        if (!$battleData) {
+        if (! $battleData) {
             return redirect()->route('index')->with('error', 'Battle not found');
         }
 
         $quiz = Quiz::with(['questions.options'])->find($battleData['quiz_id']);
 
-        if (!$quiz) {
+        if (! $quiz) {
             return redirect()->route('index')->with('error', 'Quiz not found');
         }
 
         $sessionToken = Session::get('session_token');
 
-        if (!$sessionToken || !in_array($sessionToken, $battleData['players'])) {
+        if (! $sessionToken || ! in_array($sessionToken, $battleData['players'])) {
             return redirect()->route('index')->with('error', 'You are not part of this battle');
         }
 
-        return view('battle', compact('battleId', 'quiz', 'sessionToken', 'battleData'));
+        $antiCheatConfig = [
+            'enabled' => true,
+            'tabSwitching' => Setting::getValue('QUIZ_ANTI_CHEAT_TAB_SWITCH', true),
+            'navigationProtection' => Setting::getValue('QUIZ_ANTI_CHEAT_BEFOREUNLOAD', true),
+            'pageUnload' => Setting::getValue('QUIZ_ANTI_CHEAT_UNLOAD', true),
+            'confirmationDialog' => Setting::getValue('QUIZ_ANTI_CHEAT_BEFOREUNLOAD', true),
+            'triggerDelay' => Setting::getValue('QUIZ_BATTLE_GRACE_PERIOD', 5) * 1000,
+        ];
+
+        return view('battle', compact('battleId', 'quiz', 'sessionToken', 'battleData', 'antiCheatConfig'));
     }
 
     public function joinBattle(Request $request, string $battleId)
     {
         $sessionToken = Session::get('session_token');
 
-        if (!$sessionToken) {
+        if (! $sessionToken) {
             return response()->json(['error' => 'No session token'], 400);
         }
 
         $joined = $this->battleService->joinBattle($battleId, $sessionToken);
 
-        if (!$joined) {
+        if (! $joined) {
             return response()->json(['error' => 'Cannot join battle'], 400);
         }
 
@@ -62,7 +72,7 @@ class BattleController extends Controller
 
         $sessionToken = Session::get('session_token');
 
-        if (!$sessionToken) {
+        if (! $sessionToken) {
             return response()->json(['error' => 'No session token'], 400);
         }
 
@@ -73,7 +83,7 @@ class BattleController extends Controller
             $request->total_time_ms
         );
 
-        if (!$submitted) {
+        if (! $submitted) {
             return response()->json(['error' => 'Cannot submit score'], 400);
         }
 
@@ -88,7 +98,7 @@ class BattleController extends Controller
 
         $sessionToken = Session::get('session_token');
 
-        if (!$sessionToken) {
+        if (! $sessionToken) {
             return response()->json(['error' => 'No session token'], 400);
         }
 

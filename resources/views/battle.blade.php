@@ -169,15 +169,8 @@
                     battleStatus: document.getElementById('battle-status')
                 };
 
-                // Anti-cheat configuration
-                const antiCheatConfig = {
-                    enabled: @json(config('quiz.anti_cheat.enabled')),
-                    tabSwitching: @json(config('quiz.anti_cheat.tab_switching')),
-                    navigationProtection: @json(config('quiz.anti_cheat.navigation_protection')),
-                    pageUnload: @json(config('quiz.anti_cheat.page_unload')),
-                    confirmationDialog: @json(config('quiz.anti_cheat.confirmation_dialog')),
-                    triggerDelay: @json(config('quiz.anti_cheat.trigger_delay'))
-                };
+                // Anti-cheat configuration from database
+                const antiCheatConfig = @json($antiCheatConfig);
 
                 // Anti-cheat measures
                 if (antiCheatConfig.enabled) {
