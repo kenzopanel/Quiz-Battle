@@ -46,9 +46,15 @@
                                             class="flex-shrink-0 inline-flex items-center justify-center h-8 w-8 rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-sm font-medium mr-3">
                                             {{ $index + 1 }}
                                         </span>
-                                        <h4 class="text-lg font-medium text-gray-900 dark:text-white">
-                                            {{ $question->question_text }}
-                                        </h4>
+                                        <div class="flex-1">
+                                            <h4 class="text-lg font-medium text-gray-900 dark:text-white">
+                                                {{ $question->question_text }}
+                                            </h4>
+                                            @if ($question->image_path)
+                                                <img src="{{ $question->image_url }}" alt="Question image"
+                                                    class="w-24 h-24 object-cover rounded mt-2">
+                                            @endif
+                                        </div>
                                     </div>
                                     <div class="mt-3 ml-11 space-y-2">
                                         @foreach ($question->options as $optionIndex => $option)

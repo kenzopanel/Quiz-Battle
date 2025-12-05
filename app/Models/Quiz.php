@@ -6,11 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Str;
 
 class Quiz extends Model
 {
-    /** @use HasFactory<\Database\Factories\QuizFactory> */
     use HasFactory;
 
     protected $fillable = [
@@ -35,6 +33,7 @@ class Quiz extends Model
     {
         $minutes = floor($this->timeout_seconds / 60);
         $seconds = $this->timeout_seconds % 60;
+
         return sprintf('%d:%02d', $minutes, $seconds);
     }
 }

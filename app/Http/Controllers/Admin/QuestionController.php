@@ -6,13 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreQuestionRequest;
 use App\Models\Question;
 use App\Models\Quiz;
-use Illuminate\Http\Request;
+use App\Services\QuestionService;
 
 class QuestionController extends Controller
 {
+    public function __construct(private QuestionService $questionService) {}
+
     public function index(Quiz $quiz)
     {
         $quiz->load(['questions.options', 'category']);
+
         return view('admin.questions.index', compact('quiz'));
     }
 
@@ -23,13 +26,13 @@ class QuestionController extends Controller
 
     public function store(StoreQuestionRequest $request, Quiz $quiz)
     {
-        $question = $quiz->questions()->create([
-            'question_text' => $request->question_text,
-        ]);
+        $data = $request->validated();
+        $data['quiz'] = $quiz;
 
-        // Create options
+        $question = $this->questionService->storeQuestion($data);
+
         foreach ($request->options as $index => $optionText) {
-            if (!empty($optionText)) {
+            if (! empty($optionText)) {
                 $question->options()->create([
                     'option_text' => $optionText,
                     'is_correct' => $request->correct_option == $index,
@@ -44,26 +47,32 @@ class QuestionController extends Controller
     public function show(Quiz $quiz, Question $question)
     {
         $question->load('options');
+
         return view('admin.questions.show', compact('quiz', 'question'));
     }
 
     public function edit(Quiz $quiz, Question $question)
     {
         $question->load('options');
+
         return view('admin.questions.edit', compact('quiz', 'question'));
     }
 
     public function update(StoreQuestionRequest $request, Quiz $quiz, Question $question)
     {
-        $question->update([
-            'question_text' => $request->question_text,
-        ]);
+        $data = $request->validated();
 
-        // Delete existing options and create new ones
+        // If remove_image is set but no new image uploaded, set image to null
+        if ($request->input('remove_image') == '1' && ! isset($data['image'])) {
+            $data['image'] = null;
+        }
+
+        $this->questionService->updateQuestion($question, $data);
+
         $question->options()->delete();
 
         foreach ($request->options as $index => $optionText) {
-            if (!empty($optionText)) {
+            if (! empty($optionText)) {
                 $question->options()->create([
                     'option_text' => $optionText,
                     'is_correct' => $request->correct_option == $index,
@@ -77,7 +86,7 @@ class QuestionController extends Controller
 
     public function destroy(Quiz $quiz, Question $question)
     {
-        $question->delete();
+        $this->questionService->deleteQuestion($question);
 
         return redirect()->route('admin.quizzes.questions.index', $quiz)
             ->with('success', 'Question deleted successfully!');

@@ -23,6 +23,15 @@
                         <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Pertanyaan</dt>
                         <dd class="mt-1 text-sm text-gray-900 dark:text-white">{{ $question->question_text }}</dd>
                     </div>
+                    @if ($question->image_path)
+                        <div>
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Gambar</dt>
+                            <dd class="mt-1">
+                                <img src="{{ $question->image_url }}" alt="Question image"
+                                    class="w-full h-48 object-cover rounded-lg">
+                            </dd>
+                        </div>
+                    @endif
                     <div>
                         <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Dibuat</dt>
                         <dd class="mt-1 text-sm text-gray-900 dark:text-white">

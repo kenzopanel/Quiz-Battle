@@ -26,6 +26,7 @@ class StoreQuestionRequest extends FormRequest
             'options' => 'required|array|min:2|max:6',
             'options.*' => 'required|string|max:255',
             'correct_option' => 'required|integer|min:0',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:1024',
         ];
     }
 
@@ -40,7 +41,7 @@ class StoreQuestionRequest extends FormRequest
             }
 
             $nonEmptyOptions = array_filter($this->options, function ($option) {
-                return !empty(trim($option));
+                return ! empty(trim($option));
             });
 
             if (count($nonEmptyOptions) < 2) {
@@ -63,6 +64,9 @@ class StoreQuestionRequest extends FormRequest
             'options.*.required' => 'All option fields must be filled.',
             'options.*.max' => 'Each option must not exceed 255 characters.',
             'correct_option.required' => 'Please select the correct answer.',
+            'image.image' => 'The image must be a valid image file.',
+            'image.mimes' => 'The image must be a JPEG, PNG, JPG, GIF, or WebP file.',
+            'image.max' => 'The image must not exceed 1 MB.',
         ];
     }
 }
