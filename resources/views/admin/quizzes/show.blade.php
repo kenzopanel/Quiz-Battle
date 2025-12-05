@@ -258,105 +258,103 @@
                     </div>
                 @endif
             </div>
+        </div>
 
-            <!-- Sidebar -->
-            <div class="space-y-6">
-                <!-- Quick Actions Card -->
-                <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700">
-                    <div class="p-6">
-                        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Aksi Cepat</h3>
+        <!-- Sidebar -->
+        <div class="space-y-6">
+            <!-- Quick Actions Card -->
+            <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700">
+                <div class="p-6">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Aksi Cepat</h3>
 
-                        <div class="space-y-3">
-                            <a href="{{ route('admin.quizzes.edit', $quiz) }}"
-                                class="w-full inline-flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition duration-150 ease-in-out">
+                    <div class="space-y-3">
+                        <a href="{{ route('admin.quizzes.edit', $quiz) }}"
+                            class="w-full inline-flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition duration-150 ease-in-out">
+                            <svg class="-ml-1 mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                            Edit Kuis
+                        </a>
+
+                        <a href="{{ route('admin.quizzes.questions.index', $quiz) }}"
+                            class="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-lg text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-150 ease-in-out">
+                            <svg class="mr-1.5 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Kelola Soal
+                        </a>
+
+                        @if ($quiz->questions->count() > 0)
+                            <a href="{{ route('admin.quizzes.questions.create', $quiz) }}"
+                                class="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-lg text-sm font-medium text-green-700 bg-green-100 hover:bg-green-200 dark:bg-green-900 dark:text-green-200 dark:hover:bg-green-800 transition duration-150 ease-in-out">
                                 <svg class="-ml-1 mr-2 h-4 w-4" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                        d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                 </svg>
-                                Edit Kuis
+                                Tambah Soal
                             </a>
-
-                            <a href="{{ route('admin.quizzes.questions.index', $quiz) }}"
-                                class="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-lg text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-150 ease-in-out">
-                                <svg class="mr-1.5 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                Kelola Soal
-                            </a>
-
-                            @if ($quiz->questions->count() > 0)
-                                <a href="{{ route('admin.quizzes.questions.create', $quiz) }}"
-                                    class="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-lg text-sm font-medium text-green-700 bg-green-100 hover:bg-green-200 dark:bg-green-900 dark:text-green-200 dark:hover:bg-green-800 transition duration-150 ease-in-out">
-                                    <svg class="-ml-1 mr-2 h-4 w-4" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                    </svg>
-                                    Tambah Soal
-                                </a>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Stats Card -->
-                <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700">
-                    <div class="p-6">
-                        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Statistik Kuis</h3>
-
-                        <div class="space-y-4">
-                            <div class="flex justify-between items-center">
-                                <span class="text-sm text-gray-500 dark:text-gray-400">Total Soal</span>
-                                <span
-                                    class="text-sm font-semibold text-gray-900 dark:text-white">{{ $quiz->questions->count() }}</span>
-                            </div>
-
-                            <div class="flex justify-between items-center">
-                                <span class="text-sm text-gray-500 dark:text-gray-400">Durasi Perkiraan</span>
-                                <span class="text-sm font-semibold text-gray-900 dark:text-white">
-                                    {{ $quiz->questions->count() * $quiz->per_question_time }} detik
-                                </span>
-                            </div>
-
-                            <div class="flex justify-between items-center">
-                                <span class="text-sm text-gray-500 dark:text-gray-400">Status</span>
-                                <span
-                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $quiz->questions->count() > 0 ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' : 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200' }}">
-                                    {{ $quiz->questions->count() > 0 ? 'Siap' : 'Belum ada soal' }}
-                                </span>
-                            </div>
-
-                            <div
-                                class="flex justify-between items-center pt-2 border-t border-gray-200 dark:border-gray-700">
-                                <span class="text-sm text-gray-500 dark:text-gray-400">Dibuat</span>
-                                <span
-                                    class="text-sm font-semibold text-gray-900 dark:text-white">{{ $quiz->created_at->diffForHumans() }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Danger Zone -->
-                <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-                    <div class="p-6">
-                        <form method="POST" action="{{ route('admin.quizzes.destroy', $quiz) }}"
-                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus kuis ini? Ini juga akan menghapus semua soal dan tidak dapat dibatalkan.')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit"
-                                class="w-full inline-flex items-center justify-center px-4 py-2 border border-red-300 dark:border-red-700 rounded-lg text-sm font-medium text-red-700 dark:text-red-300 bg-white dark:bg-red-900/50 hover:bg-red-50 dark:hover:bg-red-900/75 transition duration-150 ease-in-out cursor-pointer">
-                                <svg class="-ml-1 mr-2 h-4 w-4" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                </svg>
-                                Hapus Kuis
-                            </button>
-                        </form>
+                        @endif
                     </div>
                 </div>
             </div>
+
+            <!-- Stats Card -->
+            <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700">
+                <div class="p-6">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Statistik Kuis</h3>
+
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500 dark:text-gray-400">Total Soal</span>
+                            <span
+                                class="text-sm font-semibold text-gray-900 dark:text-white">{{ $quiz->questions->count() }}</span>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500 dark:text-gray-400">Durasi Perkiraan</span>
+                            <span class="text-sm font-semibold text-gray-900 dark:text-white">
+                                {{ $quiz->questions->count() * $quiz->per_question_time }} detik
+                            </span>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500 dark:text-gray-400">Status</span>
+                            <span
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $quiz->questions->count() > 0 ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' : 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200' }}">
+                                {{ $quiz->questions->count() > 0 ? 'Siap' : 'Belum ada soal' }}
+                            </span>
+                        </div>
+
+                        <div class="flex justify-between items-center pt-2 border-t border-gray-200 dark:border-gray-700">
+                            <span class="text-sm text-gray-500 dark:text-gray-400">Dibuat</span>
+                            <span
+                                class="text-sm font-semibold text-gray-900 dark:text-white">{{ $quiz->created_at->diffForHumans() }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Danger Zone -->
+            <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                <div class="p-6">
+                    <form method="POST" action="{{ route('admin.quizzes.destroy', $quiz) }}"
+                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus kuis ini? Ini juga akan menghapus semua soal dan tidak dapat dibatalkan.')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                            class="w-full inline-flex items-center justify-center px-4 py-2 border border-red-300 dark:border-red-700 rounded-lg text-sm font-medium text-red-700 dark:text-red-300 bg-white dark:bg-red-900/50 hover:bg-red-50 dark:hover:bg-red-900/75 transition duration-150 ease-in-out cursor-pointer">
+                            <svg class="-ml-1 mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Hapus Kuis
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
-    @endsection
+    </div>
+@endsection

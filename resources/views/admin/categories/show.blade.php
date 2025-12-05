@@ -53,9 +53,7 @@
                                     {{ $quiz->title }}
                                 </h4>
                                 <p class="text-sm text-gray-500 mt-3 dark:text-gray-400">
-                                    Code: <span
-                                        class="font-mono bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">{{ $quiz->code }}</span>
-                                    • {{ $quiz->questions_count }} {{ $quiz->questions_count }} pertanyaan
+                                    {{ $quiz->questions_count }} pertanyaan
                                     • Dibuat {{ $quiz->created_at->format('M j, Y') }}
                                 </p>
                                 @if ($quiz->description)

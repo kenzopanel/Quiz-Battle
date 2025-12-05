@@ -16,9 +16,6 @@
         <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg mb-6">
             <div class="px-4 py-5 sm:px-6">
                 <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">{{ $quiz->title }}</h3>
-                <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">
-                    {{ $quiz->category->name }} • #{{ $quiz->code }}
-                </p>
             </div>
             <div class="border-t border-gray-200 dark:border-gray-700 px-4 py-5 sm:px-6">
                 <dl class="grid grid-cols-1 gap-x-4 gap-y-6">

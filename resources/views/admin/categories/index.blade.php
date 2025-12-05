@@ -11,9 +11,13 @@
         </a>
     </div>
 
+    @php
+        $divider = $categories->count() > 0 ? 'divide-y divide-gray-200 dark:divide-gray-700' : '';
+    @endphp
+
     <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-md">
         @if ($categories->count() > 0)
-            <ul class="divide-y divide-gray-200 dark:divide-gray-700">
+            <ul class="{{ $divider }}">
                 @foreach ($categories as $category)
                     <li>
                         <div class="px-4 py-4 flex items-center justify-between">
@@ -58,9 +62,11 @@
                 @endforeach
             </ul>
 
-            <div class="px-4 py-3 border-t border-gray-200 dark:border-gray-700">
-                {{ $categories->links() }}
-            </div>
+            @if ($categories->hasPages())
+                <div class="px-4 py-3 border-t border-gray-200 dark:border-gray-700">
+                    {{ $categories->links() }}
+                </div>
+            @endif
         @else
             <div class="text-center py-12">
                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 48 48">

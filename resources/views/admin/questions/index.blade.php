@@ -24,9 +24,6 @@
             <div class="flex justify-between items-center">
                 <div>
                     <h3 class="text-lg font-medium text-gray-900 dark:text-white">{{ $quiz->title }}</h3>
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                        {{ $quiz->category->name }} • #<span class="font-mono">{{ $quiz->code }}</span>
-                    </p>
                 </div>
                 <a href="{{ route('admin.quizzes.questions.create', $quiz) }}"
                     class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium">
