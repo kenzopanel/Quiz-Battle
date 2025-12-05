@@ -50,22 +50,20 @@
                                 </button>
                             </div>
                         </div>
-                        <div id="dropzone-container" class="flex items-center justify-center w-full">
-                            <label for="image"
-                                class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600">
-                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                    <svg class="w-8 h-8 text-gray-500 dark:text-gray-400" fill="none"
-                                        stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 4v16m8-8H4"></path>
-                                    </svg>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-2"><span
-                                            class="font-semibold">Upload Gambar</span> atau drag and drop</p>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG, GIF, WebP (max 1MB)</p>
-                                </div>
-                                <input id="image" type="file" name="image" class="hidden" accept="image/*">
-                            </label>
+                        <div id="dropzone-container"
+                            class="mb-4 p-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition">
+                            <svg class="w-8 h-8 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 text-center">Klik atau seret gambar di sini
+                            </p>
+                            <p class="text-xs text-gray-500 dark:text-gray-500 text-center mt-1">Maks 1MB | JPEG, PNG, GIF,
+                                WebP</p>
                         </div>
+                        <input type="file" id="image" name="image" accept="image/*" class="hidden" />
                         @error('image')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror

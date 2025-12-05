@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->string('title');
-            $table->string('code', 8)->unique();
             $table->text('description')->nullable();
             $table->integer('timeout_seconds')->default(60);
             $table->integer('per_question_time')->default(15);
