@@ -77,7 +77,7 @@
                                     <a href="{{ route('admin.quizzes.questions.show', [$quiz, $question]) }}"
                                         class="text-indigo-600 hover:text-indigo-700 text-sm font-medium">Lihat</a>
                                     <a href="{{ route('admin.quizzes.questions.edit', [$quiz, $question]) }}"
-                                        class="text-gray-200 hover:text-gray-400 text-sm font-medium">Edit</a>
+                                        class="text-gray-600 hover:text-gray-800 dark:text-gray-200 dark:hover:text-gray-400 text-sm font-medium">Edit</a>
                                     <form method="POST"
                                         action="{{ route('admin.quizzes.questions.destroy', [$quiz, $question]) }}"
                                         class="inline"

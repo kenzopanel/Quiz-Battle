@@ -135,7 +135,7 @@
                                         Lihat
                                     </a>
                                     <a href="{{ route('admin.quizzes.edit', $quiz) }}"
-                                        class="text-gray-200 hover:text-gray-400 text-sm font-medium">
+                                        class="text-gray-600 hover:text-gray-800 dark:text-gray-200 dark:hover:text-gray-400 text-sm font-medium">
                                         Edit
                                     </a>
                                 </div>
