@@ -7,6 +7,9 @@
                 {{ config('app.name') }}
             </h1>
             <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
+                Volume dan Luas Permukaan Bangun Ruang
+            </p>
+            <p class="text-lg text-gray-500 dark:text-gray-400 mb-8">
                 Pilih kategori dan tantang lawan dalam pertarungan kuis!
             </p>
 
@@ -119,4 +122,64 @@
             </div>
         </div>
     </div>
+
+    <!-- Static Modal -->
+    <div id="modal"
+        class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 px-3 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full flex">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4 w-full max-w-2xl max-h-full">
+            <div class="flex items-center justify-between border-b border-gray-300 pb-4 md:pb-5 dark:border-gray-700">
+                <h3 class="text-lg font-medium text-heading dark:text-white">
+                    Tujuan Aplikasi Ini
+                </h3>
+                <button type="button"
+                    class="text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center dark:text-gray-400 cursor-pointer closeModal">
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18 17.94 6M18 18 6.06 6" />
+                    </svg>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="py-4 px-5 text-base/7 text-gray-700 dark:text-gray-300">
+                <ol class="list-decimal">
+                    <li>Memahami karakteristik bangun ruang sisi datar (kubus, balok, prisma, dan Limas)</li>
+                    <li>Menggambarkan jaring-jaring kubus, balok, prisma dan Limas</li>
+                    <li>Menentukan luas permukaan kubus, balok, prisma, dan Limas</li>
+                    <li>Menentukan volume permukaan kubus, balok, prisma, dan Limas</li>
+                    <li>Menentukan luas permukaan dan volume bangun ruang sisi datar gabungan</li>
+                </ol>
+            </div>
+            <button
+                class="px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium float-right rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer closeModal">
+                Tutup
+            </button>
+        </div>
+    </div>
+
+    <div id="backdrop" class="fixed inset-0 z-40"
+        style="background-color:color-mix(in oklab,oklch(13% .028 261.692)70%,transparent)">
+    </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('modal');
+            const backdrop = document.getElementById('backdrop');
+            const closeModalBtn = document.querySelectorAll('.closeModal');
+            document.body.classList.add("overflow-hidden");
+
+            modal.classList.remove('hidden');
+            backdrop.classList.remove('hidden');
+
+            closeModalBtn.forEach(button => {
+                button.addEventListener('click', function() {
+                    modal.classList.add('hidden');
+                    backdrop.classList.add('hidden');
+                    document.body.classList.remove("overflow-hidden");
+                });
+            });
+        });
+    </script>
+@endpush
